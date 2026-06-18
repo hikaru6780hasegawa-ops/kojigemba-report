@@ -4,19 +4,19 @@
 <style data-omelette-print-defaults>
 @media print {
   @page { margin: 0; }
-  body { padding: 0.5in; box-sizing: border-box; }
-  h1, h2, h3, h4, h5, h6 { break-after: avoid; }
-  figure, table, pre, blockquote, img, svg, tr, [class~="card" i] { break-inside: avoid; }
-  img, svg { max-width: 100%; }
+  body { margin: 0; padding: 0; }
+  h1,h2,h3,h4,h5,h6 { break-after: avoid; }
+  figure,table,pre,blockquote,img,svg,tr { break-inside: avoid; }
+  img,svg { max-width: 100%; }
   p { orphans: 3; widows: 3; }
 }
 </style>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>株式会社マーシャルアーツ — 会社案内デジタルブック</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>株式会社マーシャルアーツ — 会社案内</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --paper: oklch(0.97 0.005 80);
@@ -25,234 +25,719 @@
     --rule: oklch(0.86 0.008 60);
     --panel: oklch(0.93 0.006 80);
     --accent: oklch(0.58 0.16 35);
-    --stage: oklch(0.20 0.008 60);
-    --serif: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
-    --sans: "Inter", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-    --mono: "JetBrains Mono", ui-monospace, monospace;
+    --dark: #1b1b1d;
+    --serif: "Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+    --sans: "Inter","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    --mono: "JetBrains Mono",ui-monospace,monospace;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; background: var(--stage); font-family: var(--sans); color: var(--ink); -webkit-font-smoothing: antialiased; }
-  body { overflow: hidden; }
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--sans); color: var(--ink); background: oklch(0.20 0.008 60); }
   img { display: block; }
-  ::selection { background: var(--accent); color: var(--paper); }
-  #root { height: 100%; }
+
+  /* ── screen view ── */
+  @media screen {
+    body { display: flex; flex-direction: column; align-items: center; padding: 48px 0; gap: 28px; }
+    .spread { box-shadow: 0 24px 64px -16px rgba(0,0,0,0.65); }
+  }
+
+  /* ── print ── */
+  @media print {
+    @page { size: 1440px 940px; margin: 0; }
+    body { background: none; padding: 0; gap: 0; display: block; }
+    .spread { box-shadow: none; }
+    *, *::before, *::after {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+  }
+
+  /* ── spread & page ── */
+  .spread {
+    width: 1440px;
+    height: 940px;
+    display: flex;
+    flex-shrink: 0;
+    break-after: page;
+    page-break-after: always;
+    overflow: hidden;
+    position: relative;
+  }
+  .spread:last-child { break-after: auto; page-break-after: auto; }
+
+  .page {
+    width: 720px;
+    height: 940px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    background: var(--paper);
+  }
+
+  /* center gutter shadow (screen only) */
+  @media screen {
+    .spread::after {
+      content: "";
+      position: absolute;
+      top: 0; bottom: 0;
+      left: calc(720px - 28px);
+      width: 56px;
+      background: linear-gradient(90deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0.13) 48%,rgba(0,0,0,0.13) 52%,rgba(0,0,0,0) 100%);
+      pointer-events: none;
+      z-index: 5;
+    }
+  }
+
+  /* ── page frame ── */
+  .pf {
+    position: absolute;
+    inset: 0;
+    padding: 56px;
+    display: flex;
+    flex-direction: column;
+  }
+  .pf-hd {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+  }
+  .pf-rule { width: 28px; height: 1px; background: var(--rule); }
+  .pf-body { flex: 1; min-height: 0; }
+  .pf-ft {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 24px;
+  }
+
+  /* ── type helpers ── */
+  .cap {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .cap-dk { color: oklch(0.82 0.01 60); }
+  .folio { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
+
+  /* ── photo fill ── */
+  .fill { position: absolute; inset: 0; overflow: hidden; }
+  .fill img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ── division row ── */
+  .div-row {
+    border-top: 1px solid var(--rule);
+    padding: 16px 0;
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 14px;
+    flex: 1;
+  }
 </style>
 </head>
 <body>
-  <div id="root"></div>
-  <template id="__bundler_thumbnail">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-      <rect width="100" height="100" fill="#1b1b1d" />
-      <rect x="30" y="22" width="40" height="56" fill="#2b2b2e" stroke="#c2603f" stroke-width="1.5" />
-      <rect x="50" y="22" width="20" height="56" fill="#222225" />
-      <line x1="50" y1="22" x2="50" y2="78" stroke="#c2603f" stroke-width="1" />
-      <rect x="56" y="34" width="9" height="3" fill="#c2603f" />
-    </svg>
-  </template>
 
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-  <script type="text/babel" src="book.jsx"></script>
+<!-- ═══════════ SPREAD 00 · COVER ═══════════ -->
+<div class="spread">
+
+  <!-- left: sunset photo -->
+  <div class="page" style="background:var(--dark)">
+    <div class="fill">
+      <img src="assets/house-sunset.jpg" alt="施工事例" style="object-position:center 40%">
+    </div>
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,20,22,0) 55%,rgba(20,20,22,0.85) 100%)"></div>
+  </div>
+
+  <!-- right: title -->
+  <div class="page" style="background:var(--dark);color:var(--paper);padding:56px;display:flex;flex-direction:column;justify-content:space-between">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <span class="cap cap-dk">Company Profile</span>
+      <span class="cap cap-dk">2026</span>
+    </div>
+    <div>
+      <div style="width:44px;height:3px;background:var(--accent);margin-bottom:28px"></div>
+      <div style="font-family:var(--serif);font-size:26px;font-weight:400;letter-spacing:0.04em;color:oklch(0.82 0.01 60)">株式会社マーシャルアーツ</div>
+      <h1 style="font-family:var(--serif);font-size:72px;font-weight:500;line-height:1.02;letter-spacing:-0.01em;margin-top:14px">会社案内</h1>
+      <div style="margin-top:18px;font-size:15px;line-height:1.8;color:oklch(0.78 0.01 60);max-width:380px">
+        自社で施工し、自社で販売する。<br>住まいの、その先まで。
+      </div>
+    </div>
+    <span class="cap cap-dk">Tokyo · Nagoya — Est. 2008</span>
+  </div>
+
+</div>
+
+
+<!-- ═══════════ SPREAD 01 · ご挨拶 ═══════════ -->
+<div class="spread">
+
+  <!-- left: message -->
+  <div class="page">
+    <div class="pf">
+      <div class="pf-hd"><span class="cap">Greeting / ご挨拶</span><span class="pf-rule"></span></div>
+      <div class="pf-body" style="display:flex;flex-direction:column;justify-content:center">
+        <span class="cap">Message — 001</span>
+        <h2 style="font-family:var(--serif);font-size:46px;font-weight:400;line-height:1.3;letter-spacing:-0.01em;margin:20px 0 28px">
+          家は、買って<br>終わりではない。<br><span style="color:var(--accent)">住まいの伴走者として。</span>
+        </h2>
+        <p style="font-size:14.5px;line-height:2;color:var(--ink-soft);max-width:520px">
+          私たちは2008年の創業以来、不動産の売買・仲介にとどまらず、建築・リフォーム・エネルギー・保険、そして人生の節目に寄り添うマリッジ事業まで、暮らしに関わる事業を一貫して手がけてまいりました。
+        </p>
+        <p style="font-size:14.5px;line-height:2;color:var(--ink-soft);max-width:520px;margin-top:18px">
+          企画から設計、施工、販売、そして引き渡したあとの暮らしまで——自社で責任を持つこと。それが私たちの考える「誠実」のかたちです。
+        </p>
+        <div style="margin-top:32px;display:flex;align-items:baseline;gap:14px">
+          <span class="cap">代表取締役</span>
+          <span style="font-family:var(--serif);font-size:20px">長谷川 光</span>
+        </div>
+      </div>
+      <div class="pf-ft">
+        <span class="cap">Martial Arts, Inc.</span>
+        <span class="folio">02</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- right: house-corner photo -->
+  <div class="page">
+    <div class="fill"><img src="assets/house-corner.jpg" alt="外観" style="object-position:center"></div>
+    <div style="position:absolute;left:0;bottom:0;right:0;padding:20px 24px;background:linear-gradient(0deg,rgba(0,0,0,0.55),rgba(0,0,0,0))">
+      <span class="cap cap-dk">Fig. 01 — 自社施工による戸建住宅</span>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════ SPREAD 02 · 企業理念 ═══════════ -->
+<div class="spread">
+
+  <!-- left: philosophy heading -->
+  <div class="page" style="background:var(--panel)">
+    <div class="pf">
+      <div class="pf-hd"><span class="cap">Philosophy / 企業理念</span><span class="pf-rule"></span></div>
+      <div class="pf-body" style="display:flex;flex-direction:column;justify-content:center">
+        <span class="cap">Our Principles</span>
+        <h2 style="font-family:var(--serif);font-size:52px;font-weight:400;line-height:1.15;letter-spacing:-0.01em;margin:18px 0 0">一貫した<br>誠実。</h2>
+        <p style="font-size:14px;line-height:1.95;color:var(--ink-soft);margin-top:24px;max-width:500px">
+          事業領域は広くとも、貫くものはひとつ。お客さまの資産と生活に、最後まで責任を持つこと。
+        </p>
+      </div>
+      <div class="pf-ft">
+        <span class="cap">Martial Arts, Inc.</span>
+        <span class="folio">03</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- right: three pillars -->
+  <div class="page" style="background:var(--panel)">
+    <div class="pf">
+      <div class="pf-body" style="display:flex;flex-direction:column;justify-content:center;gap:26px">
+        <div style="border-top:1px solid var(--ink);padding-top:16px">
+          <div style="display:flex;align-items:baseline;gap:14px">
+            <span style="font-family:var(--serif);font-size:30px;font-weight:500">誠実</span>
+            <span class="cap">Integrity</span>
+          </div>
+          <p style="font-size:14px;line-height:1.75;color:var(--ink-soft);margin-top:8px">お客さまの資産と生活に、最後まで責任を持つ。</p>
+        </div>
+        <div style="border-top:1px solid var(--ink);padding-top:16px">
+          <div style="display:flex;align-items:baseline;gap:14px">
+            <span style="font-family:var(--serif);font-size:30px;font-weight:500">一貫</span>
+            <span class="cap">Consistency</span>
+          </div>
+          <p style="font-size:14px;line-height:1.75;color:var(--ink-soft);margin-top:8px">企画・設計・施工・販売・運用までを自社で。</p>
+        </div>
+        <div style="border-top:1px solid var(--ink);padding-top:16px">
+          <div style="display:flex;align-items:baseline;gap:14px">
+            <span style="font-family:var(--serif);font-size:30px;font-weight:500">継続</span>
+            <span class="cap">Continuity</span>
+          </div>
+          <p style="font-size:14px;line-height:1.75;color:var(--ink-soft);margin-top:8px">売って終わりではない、住まいの伴走者として。</p>
+        </div>
+      </div>
+      <div class="pf-ft">
+        <span class="cap">Martial Arts, Inc.</span>
+        <span class="folio"></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════ SPREAD 03 · 事業案内 ═══════════ -->
+<div class="spread">
+
+  <!-- left: divisions 01–04 -->
+  <div class="page">
+    <div class="pf">
+      <div class="pf-hd"><span class="cap">Business / 事業案内</span><span class="pf-rule"></span></div>
+      <div class="pf-body" style="display:flex;flex-direction:column">
+        <span class="cap">Seven Divisions</span>
+        <h2 style="font-family:var(--serif);font-size:44px;font-weight:400;line-height:1.1;margin:16px 0 24px">七つの事業</h2>
+        <div style="flex:1;display:flex;flex-direction:column">
+          <div class="div-row">
+            <span style="font-family:var(--mono);font-size:12px;color:var(--ink-soft)">01</span>
+            <div>
+              <div style="display:flex;align-items:baseline;gap:12px">
+                <span style="font-family:var(--serif);font-size:21px;font-weight:500">不動産事業</span>
+                <span class="cap">Real Estate</span>
+              </div>
+              <p style="font-size:12.5px;line-height:1.65;color:var(--ink-soft);margin-top:5px">売買・仲介から賃貸管理、分譲開発まで一貫対応。</p>
+            </div>
+          </div>
+          <div class="div-row">
+            <span style="font-family:var(--mono);font-size:12px;color:var(--ink-soft)">02</span>
+            <div>
+              <div style="display:flex;align-items:baseline;gap:12px">
+                <span style="font-family:var(--serif);font-size:21px;font-weight:500">建築事業</span>
+                <span class="cap">Architecture</span>
+              </div>
+              <p style="font-size:12.5px;line-height:1.65;color:var(--ink-soft);margin-top:5px">企画・設計・施工・維持管理を自社一貫体制で。</p>
+            </div>
+          </div>
+          <div class="div-row">
+            <span style="font-family:var(--mono);font-size:12px;color:var(--ink-soft)">03</span>
+            <div>
+              <div style="display:flex;align-items:baseline;gap:12px">
+                <span style="font-family:var(--serif);font-size:21px;font-weight:500">リフォーム事業</span>
+                <span class="cap">Renovation</span>
+              </div>
+              <p style="font-size:12.5px;line-height:1.65;color:var(--ink-soft);margin-top:5px">今ある住まいを、暮らしに合わせて生まれ変わらせる。</p>
+            </div>
+          </div>
+          <div class="div-row">
+            <span style="font-family:var(--mono);font-size:12px;color:var(--ink-soft)">04</span>
+            <div>
+              <div style="display:flex;align-items:baseline;gap:12px">
+                <span style="font-family:var(--serif);font-size:21px;font-weight:500">太陽光事業</span>
+                <span class="cap">Solar Energy</span>
+              </div>
+              <p style="font-size:12.5px;line-height:1.65;color:var(--ink-soft);margin-top:5px">発電システムの導入から運用まで包括的に提供。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pf-ft">
+        <span class="cap">Martial Arts, Inc.</span>
+        <span class="folio">04</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- right: divisions 05–07 + note -->
+  <div class="page">
+    <div class="pf">
+      <div class="pf-hd"><span class="cap">Business / 事業案内</span><span class="pf-rule"></span></div>
+      <div class="pf-body" style="display:flex;flex-direction:column">
+        <div style="flex:1;display:flex;flex-direction:column">
+          <div class="div-row">
+            <span style="font-family:var(--mono);font-size:12px;color:var(--ink-soft)">05</span>
+            <div>
+              <div style="display:flex;align-items:baseline;gap:12px">
+                <span style="font-family:var(--serif);font-size:21px;font-weight:500">保険代理事業</span>
+                <span class="cap">Insurance</span>
+              </div>
+              <p style="font-size:12.5px;line-height:1.65;color:var(--ink-soft);margin-top:5px">暮らしの思わぬアクシデントに備える安心の保険。</p>
+            </div>
+          </div>
+          <div class="div-row">
+            <span style="font-family:var(--mono);font-size:12px;color:var(--ink-soft)">06</span>
+            <div>
+              <div style="display:flex;align-items:baseline;gap:12px">
+                <span style="font-family:var(--serif);font-size:21px;font-weight:500">マリッジ事業</span>
+                <span class="cap">Marriage</span>
+              </div>
+              <p style="font-size:12.5px;line-height:1.65;color:var(--ink-soft);margin-top:5px">人生の節目に寄り添う、人生設計型マリッジプラン。</p>
+            </div>
+          </div>
+          <div class="div-row">
+            <span style="font-family:var(--mono);font-size:12px;color:var(--ink-soft)">07</span>
+            <div>
+              <div style="display:flex;align-items:baseline;gap:12px">
+                <span style="font-family:var(--serif);font-size:21px;font-weight:500">その他事業</span>
+                <span class="cap">Other Ventures</span>
+              </div>
+              <p style="font-size:12.5px;line-height:1.65;color:var(--ink-soft);margin-top:5px">培った顧客基盤を活かし、新分野へ事業を展開。</p>
+            </div>
+          </div>
+          <div style="border-top:1px solid var(--ink);padding-top:18px;margin-top:4px">
+            <p style="font-size:13px;line-height:1.8;color:var(--ink-soft)">
+              住宅関連で培った顧客基盤とノウハウを軸に、領域を越えて事業を広げています。
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="pf-ft">
+        <span class="cap">Martial Arts, Inc.</span>
+        <span class="folio">05</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════ SPREAD 04 · 家づくりの工程 ═══════════ -->
+<div class="spread">
+
+  <!-- left: framing photo -->
+  <div class="page">
+    <div class="fill"><img src="assets/proc-framing.jpg" alt="建方" style="object-position:center 30%"></div>
+    <div style="position:absolute;top:0;left:0;right:0;padding:24px 28px;background:linear-gradient(180deg,rgba(0,0,0,0.5),rgba(0,0,0,0))">
+      <span class="cap cap-dk">In-house Construction / 自社施工</span>
+    </div>
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:22px 28px;background:linear-gradient(0deg,rgba(0,0,0,0.6),rgba(0,0,0,0))">
+      <span class="cap cap-dk">Fig. 02 — 木造軸組の建方・上棟</span>
+    </div>
+  </div>
+
+  <!-- right: process steps -->
+  <div class="page">
+    <div class="pf">
+      <div class="pf-hd"><span class="cap">Process / 家づくりの工程</span><span class="pf-rule"></span></div>
+      <div class="pf-body" style="display:flex;flex-direction:column">
+        <span class="cap">Step by Step</span>
+        <h2 style="font-family:var(--serif);font-size:38px;font-weight:400;line-height:1.2;margin:14px 0 6px">基礎から、<br>引き渡しまで。</h2>
+        <p style="font-size:12.5px;line-height:1.7;color:var(--ink-soft);margin:0 0 18px">一つの工程も外部に丸投げしない。自社の目で、確かな住まいを積み上げます。</p>
+        <div style="flex:1;display:flex;flex-direction:column">
+          <div style="border-top:1px solid var(--rule);padding:12px 0;display:grid;grid-template-columns:86px 1fr;gap:16px;align-items:center;flex:1">
+            <div style="width:86px;height:60px;overflow:hidden;background:var(--panel)">
+              <img src="assets/proc-foundation.jpg" alt="基礎配筋" style="width:100%;height:100%;object-fit:cover">
+            </div>
+            <div>
+              <div style="display:flex;align-items:baseline;gap:10px">
+                <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">01</span>
+                <span style="font-family:var(--serif);font-size:18px;font-weight:500">基礎配筋</span>
+                <span class="cap">Foundation</span>
+              </div>
+              <p style="font-size:11.5px;line-height:1.55;color:var(--ink-soft);margin-top:3px">地盤に応じた強固な鉄筋基礎を組み、検査を経て打設。</p>
+            </div>
+          </div>
+          <div style="border-top:1px solid var(--rule);padding:12px 0;display:grid;grid-template-columns:86px 1fr;gap:16px;align-items:center;flex:1">
+            <div style="width:86px;height:60px;overflow:hidden;background:var(--panel)">
+              <img src="assets/proc-framing.jpg" alt="建方・上棟" style="width:100%;height:100%;object-fit:cover">
+            </div>
+            <div>
+              <div style="display:flex;align-items:baseline;gap:10px">
+                <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">02</span>
+                <span style="font-family:var(--serif);font-size:18px;font-weight:500">建方・上棟</span>
+                <span class="cap">Framing</span>
+              </div>
+              <p style="font-size:11.5px;line-height:1.55;color:var(--ink-soft);margin-top:3px">構造材を組み上げ、建物の骨格をかたちづくる。</p>
+            </div>
+          </div>
+          <div style="border-top:1px solid var(--rule);padding:12px 0;display:grid;grid-template-columns:86px 1fr;gap:16px;align-items:center;flex:1">
+            <div style="width:86px;height:60px;overflow:hidden;background:var(--panel)">
+              <img src="assets/proc-interior.jpg" alt="内装工事" style="width:100%;height:100%;object-fit:cover">
+            </div>
+            <div>
+              <div style="display:flex;align-items:baseline;gap:10px">
+                <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">03</span>
+                <span style="font-family:var(--serif);font-size:18px;font-weight:500">内装工事</span>
+                <span class="cap">Interior</span>
+              </div>
+              <p style="font-size:11.5px;line-height:1.55;color:var(--ink-soft);margin-top:3px">断熱・下地から仕上げまで、住空間を整えていく。</p>
+            </div>
+          </div>
+          <div style="border-top:1px solid var(--rule);padding:12px 0;display:grid;grid-template-columns:86px 1fr;gap:16px;align-items:center;flex:1">
+            <div style="width:86px;height:60px;overflow:hidden;background:var(--panel)">
+              <img src="assets/house-front.jpg" alt="竣工・引き渡し" style="width:100%;height:100%;object-fit:cover">
+            </div>
+            <div>
+              <div style="display:flex;align-items:baseline;gap:10px">
+                <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">04</span>
+                <span style="font-family:var(--serif);font-size:18px;font-weight:500">竣工・引き渡し</span>
+                <span class="cap">Completion</span>
+              </div>
+              <p style="font-size:11.5px;line-height:1.55;color:var(--ink-soft);margin-top:3px">自社検査の上、住まいをお引き渡し。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pf-ft">
+        <span class="cap">Martial Arts, Inc.</span>
+        <span class="folio">07</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════ SPREAD 05 · 施工事例 外観 ═══════════ -->
+<div class="spread">
+
+  <!-- left: house-front -->
+  <div class="page">
+    <div class="fill"><img src="assets/house-front.jpg" alt="外観正面" style="object-position:center"></div>
+  </div>
+
+  <!-- right: case details -->
+  <div class="page">
+    <div class="pf">
+      <div class="pf-hd"><span class="cap">Selected Work / 施工事例</span><span class="pf-rule"></span></div>
+      <div class="pf-body" style="display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <span class="cap">Case 142 — 2025 · Fig. 03</span>
+          <h2 style="font-family:var(--serif);font-size:40px;font-weight:400;line-height:1.2;margin:16px 0 18px">
+            ミニマルな<br>ブラックの家
+          </h2>
+          <p style="font-size:13.5px;line-height:1.9;color:var(--ink-soft);max-width:460px">
+            深いチャコールの外壁とシャープな矩形のボリューム。周囲の街並みに静かに馴染みながら、確かな存在感を放つ自社施工の戸建住宅です。
+          </p>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;border-top:1px solid var(--rule);padding-top:18px">
+          <div><span class="cap">構造</span><div style="font-family:var(--serif);font-size:18px;margin-top:4px">木造 2階建</div></div>
+          <div><span class="cap">延床</span><div style="font-family:var(--serif);font-size:18px;margin-top:4px">108.5 m²</div></div>
+          <div><span class="cap">竣工</span><div style="font-family:var(--serif);font-size:18px;margin-top:4px">2025.11</div></div>
+          <div><span class="cap">所在</span><div style="font-family:var(--serif);font-size:18px;margin-top:4px">静岡県</div></div>
+        </div>
+      </div>
+      <div class="pf-ft">
+        <span class="cap">Martial Arts, Inc.</span>
+        <span class="folio">08</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════ SPREAD 06 · 施工事例 LDK ═══════════ -->
+<div class="spread">
+
+  <!-- left: LDK photo -->
+  <div class="page">
+    <div class="fill"><img src="assets/int-ldk.jpg" alt="LDK" style="object-position:center"></div>
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:18px 22px;background:linear-gradient(0deg,rgba(0,0,0,0.5),rgba(0,0,0,0))">
+      <span class="cap cap-dk">Fig. 02 — 約16帖のLDK・対面キッチン</span>
+    </div>
+  </div>
+
+  <!-- right: kitchen photo + text -->
+  <div class="page">
+    <div style="position:absolute;inset:0;display:grid;grid-template-rows:1.4fr 1fr">
+      <div style="position:relative;overflow:hidden">
+        <img src="assets/int-kitchen1.jpg" alt="キッチン" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block">
+      </div>
+      <div style="padding:32px 56px;display:flex;flex-direction:column;justify-content:center;background:var(--paper)">
+        <h3 style="font-family:var(--serif);font-size:26px;font-weight:500;line-height:1.3">暮らしの中心に、<br>ひらかれた台所。</h3>
+        <p style="font-size:13px;line-height:1.85;color:var(--ink-soft);margin-top:14px">
+          家族の気配を感じながら料理ができる対面型キッチン。木目調の面材と白い天板が、明るく清潔感のある空間をつくります。
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════ SPREAD 07 · 施工事例 居室 ═══════════ -->
+<div class="spread">
+
+  <!-- left: rooms text -->
+  <div class="page">
+    <div class="pf">
+      <div class="pf-hd"><span class="cap">Interior / 居室</span><span class="pf-rule"></span></div>
+      <div class="pf-body" style="display:flex;flex-direction:column;justify-content:center">
+        <span class="cap">Rooms &amp; Flow</span>
+        <h3 style="font-family:var(--serif);font-size:34px;font-weight:400;line-height:1.3;margin:16px 0 18px">
+          光と風の<br>通りみち。
+        </h3>
+        <p style="font-size:13.5px;line-height:1.95;color:var(--ink-soft);max-width:440px">
+          大きな掃き出し窓から光がたっぷりと注ぐ居室。無垢調のフローリングと白い塗り壁が、シンプルで飽きのこない住空間を生み出します。動線にも配慮した、暮らしやすい間取りです。
+        </p>
+        <div style="margin-top:26px;display:flex;gap:28px;border-top:1px solid var(--rule);padding-top:18px">
+          <div><span class="cap">居室</span><div style="font-family:var(--serif);font-size:18px;margin-top:4px">4室</div></div>
+          <div><span class="cap">収納</span><div style="font-family:var(--serif);font-size:18px;margin-top:4px">各室完備</div></div>
+          <div><span class="cap">採光</span><div style="font-family:var(--serif);font-size:18px;margin-top:4px">南面</div></div>
+        </div>
+      </div>
+      <div class="pf-ft">
+        <span class="cap">Martial Arts, Inc.</span>
+        <span class="folio">10</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- right: bedroom + hall -->
+  <div class="page">
+    <div style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr">
+      <div style="overflow:hidden"><img src="assets/int-bedroom.jpg" alt="居室" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"></div>
+      <div style="overflow:hidden"><img src="assets/int-hall.jpg" alt="廊下" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"></div>
+    </div>
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:16px 20px;background:linear-gradient(0deg,rgba(0,0,0,0.5),rgba(0,0,0,0))">
+      <span class="cap cap-dk">Fig. 03 — 居室／廊下</span>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════ SPREAD 08 · 数字 + 会社概要 ═══════════ -->
+<div class="spread">
+
+  <!-- left: numbers -->
+  <div class="page" style="background:var(--panel)">
+    <div class="pf">
+      <div class="pf-hd"><span class="cap">By the Numbers / 数字で見る</span><span class="pf-rule"></span></div>
+      <div class="pf-body" style="display:flex;flex-direction:column;justify-content:center;gap:30px">
+        <div style="display:grid;grid-template-columns:1fr auto;align-items:baseline;border-bottom:1px solid var(--rule);padding-bottom:14px">
+          <div><div style="font-family:var(--serif);font-size:16px">事業領域</div><span class="cap">Divisions</span></div>
+          <div style="font-family:var(--serif);font-size:52px;font-weight:500;letter-spacing:-0.02em;line-height:1">07</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr auto;align-items:baseline;border-bottom:1px solid var(--rule);padding-bottom:14px">
+          <div><div style="font-family:var(--serif);font-size:16px">年間取扱件数</div><span class="cap">Transactions / yr</span></div>
+          <div style="font-family:var(--serif);font-size:52px;font-weight:500;letter-spacing:-0.02em;line-height:1">1,200+</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr auto;align-items:baseline;border-bottom:1px solid var(--rule);padding-bottom:14px">
+          <div><div style="font-family:var(--serif);font-size:16px">創業からの年数</div><span class="cap">Years since 2008</span></div>
+          <div style="font-family:var(--serif);font-size:52px;font-weight:500;letter-spacing:-0.02em;line-height:1">18</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr auto;align-items:baseline;border-bottom:1px solid var(--rule);padding-bottom:14px">
+          <div><div style="font-family:var(--serif);font-size:16px">拠点</div><span class="cap">Offices</span></div>
+          <div style="font-family:var(--serif);font-size:52px;font-weight:500;letter-spacing:-0.02em;line-height:1">04</div>
+        </div>
+      </div>
+      <div class="pf-ft">
+        <span class="cap">Martial Arts, Inc.</span>
+        <span class="folio">11</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- right: company overview -->
+  <div class="page">
+    <div class="pf">
+      <div class="pf-hd"><span class="cap">Company / 会社概要</span><span class="pf-rule"></span></div>
+      <div class="pf-body" style="display:flex;flex-direction:column;justify-content:center">
+        <h2 style="font-family:var(--serif);font-size:30px;font-weight:400;margin-bottom:22px">会社概要</h2>
+        <div style="display:grid;grid-template-columns:92px 1fr;gap:16px;padding:13px 0;border-bottom:1px solid var(--rule)">
+          <span class="cap">商号</span><span style="font-size:13.5px;line-height:1.6">株式会社マーシャルアーツ</span>
+        </div>
+        <div style="display:grid;grid-template-columns:92px 1fr;gap:16px;padding:13px 0;border-bottom:1px solid var(--rule)">
+          <span class="cap">設立</span><span style="font-size:13.5px;line-height:1.6">2008年</span>
+        </div>
+        <div style="display:grid;grid-template-columns:92px 1fr;gap:16px;padding:13px 0;border-bottom:1px solid var(--rule)">
+          <span class="cap">代表者</span><span style="font-size:13.5px;line-height:1.6">代表取締役　長谷川 光</span>
+        </div>
+        <div style="display:grid;grid-template-columns:92px 1fr;gap:16px;padding:13px 0;border-bottom:1px solid var(--rule)">
+          <span class="cap">事業内容</span><span style="font-size:13.5px;line-height:1.6">不動産・建築・リフォーム・太陽光・保険・マリッジ 他</span>
+        </div>
+        <div style="display:grid;grid-template-columns:92px 1fr;gap:16px;padding:13px 0;border-bottom:1px solid var(--rule)">
+          <span class="cap">本店</span><span style="font-size:13.5px;line-height:1.6">東京都中央区日本橋人形町1-5-8</span>
+        </div>
+        <div style="display:grid;grid-template-columns:92px 1fr;gap:16px;padding:13px 0;border-bottom:1px solid var(--rule)">
+          <span class="cap">拠点</span><span style="font-size:13.5px;line-height:1.6">中野 / 練馬 / 愛知</span>
+        </div>
+      </div>
+      <div class="pf-ft">
+        <span class="cap">Martial Arts, Inc.</span>
+        <span class="folio">12</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════ SPREAD 09 · 拠点 + 裏表紙 ═══════════ -->
+<div class="spread">
+
+  <!-- left: offices -->
+  <div class="page">
+    <div class="pf">
+      <div class="pf-hd"><span class="cap">Offices / 拠点</span><span class="pf-rule"></span></div>
+      <div class="pf-body" style="display:flex;flex-direction:column;justify-content:center;gap:20px">
+        <div style="border-top:1px solid var(--rule);padding-top:12px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline">
+            <span style="font-family:var(--serif);font-size:18px;font-weight:500">本店</span>
+            <span style="font-family:var(--mono);font-size:12px;color:var(--ink-soft)">03-6231-1113</span>
+          </div>
+          <div style="font-size:12px;color:var(--ink-soft);line-height:1.65;margin-top:5px">東京都中央区日本橋人形町1-5-8<br>アトリウム日本橋人形町一丁目ビル4階</div>
+        </div>
+        <div style="border-top:1px solid var(--rule);padding-top:12px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline">
+            <span style="font-family:var(--serif);font-size:18px;font-weight:500">中野事務所</span>
+            <span style="font-family:var(--mono);font-size:12px;color:var(--ink-soft)">03-6908-2680</span>
+          </div>
+          <div style="font-size:12px;color:var(--ink-soft);line-height:1.65;margin-top:5px">東京都中野区江原町3-34-1 HBビル2F</div>
+        </div>
+        <div style="border-top:1px solid var(--rule);padding-top:12px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline">
+            <span style="font-family:var(--serif);font-size:18px;font-weight:500">練馬事務所</span>
+            <span style="font-family:var(--mono);font-size:12px;color:var(--ink-soft)">03-6914-6792</span>
+          </div>
+          <div style="font-size:12px;color:var(--ink-soft);line-height:1.65;margin-top:5px">東京都練馬区豊玉上2-27-16 第二新建ビル1F</div>
+        </div>
+        <div style="border-top:1px solid var(--rule);padding-top:12px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline">
+            <span style="font-family:var(--serif);font-size:18px;font-weight:500">愛知事務所</span>
+            <span style="font-family:var(--mono);font-size:12px;color:var(--ink-soft)">052-253-8020</span>
+          </div>
+          <div style="font-size:12px;color:var(--ink-soft);line-height:1.65;margin-top:5px">愛知県名古屋市中区平和1-22-5<br>パルティール金山アネックス101</div>
+        </div>
+      </div>
+      <div class="pf-ft">
+        <span class="cap">Martial Arts, Inc.</span>
+        <span class="folio">13</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- right: back cover -->
+  <div class="page" style="background:var(--dark);color:var(--paper);padding:56px;display:flex;flex-direction:column;justify-content:space-between">
+    <span class="cap cap-dk">Thank you</span>
+    <div>
+      <div style="width:44px;height:3px;background:var(--accent);margin-bottom:24px"></div>
+      <h2 style="font-family:var(--serif);font-size:40px;font-weight:400;line-height:1.3">
+        住まいの、<br>その先まで。
+      </h2>
+      <p style="font-size:14px;line-height:1.9;color:oklch(0.78 0.01 60);margin-top:18px;max-width:380px">
+        ご相談・資料請求はお気軽に。私たちが、暮らしの伴走者になります。
+      </p>
+    </div>
+    <div>
+      <div style="font-family:var(--serif);font-size:22px;color:oklch(0.85 0.01 60)">株式会社マーシャルアーツ</div>
+      <div style="font-family:var(--mono);font-size:11px;color:oklch(0.62 0.01 60);letter-spacing:0.08em;margin-top:8px">
+        MARTIALARTS.CO.JP · TEL 03-6231-1113
+      </div>
+    </div>
+  </div>
+
+</div>
+
 <script>
 (async () => {
-  if (!document.title || !document.title.trim()) document.title = "会社案内デジタルブック";
-  // Prepend so page-supplied @page / break rules (deck-stage's margin:0,
-  // author CSS) keep source-order precedence over the baseline.
   const baseCss = document.createElement('style');
-  baseCss.textContent = "@media print {\n  @page { margin: 0.5cm; }\n  figure, table { break-inside: avoid; }\n  *, *::before, *::after {\n    print-color-adjust: exact; -webkit-print-color-adjust: exact;\n    backdrop-filter: none !important; -webkit-backdrop-filter: none !important;\n    animation-delay: -99s !important; animation-duration: .001s !important;\n    animation-iteration-count: 1 !important; animation-fill-mode: both !important;\n    animation-play-state: running !important; transition-duration: 0s !important;\n  }\n}";
+  baseCss.textContent = "@media print{@page{margin:0}*,*::before,*::after{print-color-adjust:exact;-webkit-print-color-adjust:exact;animation-delay:-99s !important;animation-duration:.001s !important;animation-iteration-count:1 !important;animation-fill-mode:both !important;transition-duration:0s !important}}";
   document.head.prepend(baseCss);
+
   if (document.readyState === 'loading') {
-    await new Promise((r) => document.addEventListener('DOMContentLoaded', r, { once: true }));
+    await new Promise(r => document.addEventListener('DOMContentLoaded', r, { once: true }));
   }
-  let ds = document.querySelector('deck-stage');
-  // whenDefined never resolves when nothing registers the element, so only
-  // await it when a <deck-stage> tag exists (and race a timeout regardless).
-  if (ds && !customElements.get('deck-stage')) {
-    try {
-      await Promise.race([
-        customElements.whenDefined('deck-stage'),
-        new Promise((r) => setTimeout(r, 3000)),
-      ]);
-    } catch (e) {}
-    ds = document.querySelector('deck-stage');
-  }
-  // dc-runtime assigns window.DCLogic at init and mounts into #dc-root on
-  // DOMContentLoaded; settle on that subtree so React has rendered before
-  // print(). Non-DC pages fall through to weighing body.
-  const isDc = !ds && 'DCLogic' in window;
-  const settleRoot = ds || (isDc ? document.getElementById('dc-root') : null) || document.body;
-  if (settleRoot) {
-    // Weigh only content children — skip script/style/template so inline
-    // Babel/CSS doesn't register as stable "content" before the framework
-    // has mounted anything.
-    const MEDIA = 'img,svg,canvas,video,picture,iframe,embed,object';
-    const weigh = () => {
-      let text = 0, media = 0;
-      for (const c of settleRoot.children) {
-        const t = c.tagName;
-        if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
-        text += (c.textContent || '').trim().length;
-        media += c.querySelectorAll(MEDIA).length + (c.matches(MEDIA) ? 1 : 0);
-      }
-      return text + media * 100;
-    };
-    // "Non-zero and stable" alone is not sufficient to mean rendered: generic
-    // body can carry a static shell while async main content is pending, and
-    // #dc-root can carry the root DC's static text while child refs are still
-    // .sc-placeholder boxes. Gate generic on readyState 'complete', and never
-    // accept stability while a dc-runtime placeholder is present.
-    const isGeneric = settleRoot === document.body;
-    const deadline = Date.now() + 15000;
-    let last = -1, stable = 0;
-    while (Date.now() < deadline) {
-      const n = weigh();
-      const ready =
-        (!isGeneric || document.readyState === 'complete') &&
-        !settleRoot.querySelector('.sc-placeholder');
-      if (n > 0 && n === last && ready) { if (++stable >= 2) break; } else { stable = 0; }
-      last = n;
-      await new Promise((r) => setTimeout(r, 250));
-    }
-  }
-  // Reveal content gated on scroll or visibility before printing. Lazy <img>,
-  // IntersectionObserver fade-ins, and collapsed <details> don't render while
-  // off-screen, so a long page would print with them blank or closed. Open
-  // every <details>, force native-lazy images eager, and scroll the document
-  // through its full height to trip lazy-load + IO; then wait (bounded) for the
-  // newly-triggered images. Inert for deck-stage (slides aren't scroll-gated).
+
+  // force lazy images eager and wait for all images
+  for (const img of document.querySelectorAll('img[loading="lazy"]')) img.loading = 'eager';
   try {
-    for (const d of document.querySelectorAll('details')) d.open = true;
-    for (const img of document.querySelectorAll('img[loading="lazy"]'))
-      img.loading = 'eager';
-    const scroller = document.scrollingElement || document.documentElement;
-    const full = Math.max(scroller.scrollHeight, document.body.scrollHeight);
-    const step = window.innerHeight || 800;
-    for (let y = 0; y <= full; y += step) {
-      window.scrollTo(0, y);
-      await new Promise((r) => requestAnimationFrame(r));
-    }
-    window.scrollTo(0, 0);
     await Promise.race([
-      Promise.all(
-        [...document.images].map((img) =>
-          img.complete
-            ? null
-            : new Promise((res) => {
-                img.addEventListener('load', res, { once: true });
-                img.addEventListener('error', res, { once: true });
-              })
-        )
-      ),
-      new Promise((r) => setTimeout(r, 4000)),
+      Promise.all([...document.images].map(img =>
+        img.complete ? null : new Promise(res => {
+          img.addEventListener('load', res, { once: true });
+          img.addEventListener('error', res, { once: true });
+        })
+      )),
+      new Promise(r => setTimeout(r, 6000)),
     ]);
   } catch (e) {}
+
   try { await document.fonts.ready; } catch (e) {}
-  // Jump every animation to its end state so print() never captures a slide
-  // mid-entrance. Ordering matters: the 0s-transition style must be live
-  // BEFORE data-deck-active is set so attribute-keyed transitions don't
-  // start a (now-0s) run from the pre-active base.
-  const st = document.createElement('style');
-  st.textContent = '*,*::before,*::after{animation-delay:-99s !important;animation-duration:.001s !important;animation-iteration-count:1 !important;animation-fill-mode:both !important;animation-play-state:running !important;transition-duration:0s !important}';
-  document.head.appendChild(st);
-  for (const d of document.querySelectorAll('deck-stage')) {
-    for (const c of d.children) {
-      const t = c.tagName;
-      if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
-      c.setAttribute('data-deck-active', '');
-    }
-  }
-  // Re-append deck-stage's @page last so no author @page can add a margin and
-  // spill each full-bleed slide onto two sheets. Backstop for old copies.
-  if (ds) {
-    let pg = document.getElementById('deck-stage-print-page');
-    if (!pg) {
-      pg = document.createElement('style');
-      pg.textContent = '@page{size:' + (+ds.getAttribute('width') || 1920) +
-        'px ' + (+ds.getAttribute('height') || 1080) + 'px;margin:0}';
-    }
-    document.body.appendChild(pg);
-  }
-  try {
-    const sweep = () => {
-      for (const a of document.getAnimations()) {
-        try { a.finish(); } catch (e) {
-          try { a.currentTime = (a.effect && a.effect.getComputedTiming().duration) || 0; a.pause(); } catch (e2) {}
-        }
-      }
-    };
-    sweep();
-    await new Promise((r) => requestAnimationFrame(r));
-    sweep();
-    await new Promise((r) => requestAnimationFrame(r));
-  } catch (e) {}
-  // Relax break-inside on oversized elements. An element taller than a
-  // printable page can't honor break-inside: avoid — browsers either overflow
-  // it or push it whole to the next page, leaving a blank gap, then break it
-  // anyway at an arbitrary point. After the final layout (content revealed,
-  // animations jumped), find elements taller than a page that still compute
-  // break-inside: avoid and reset them to auto, so the browser breaks them at
-  // their children's boundaries instead (children keep their own avoid). PAGE_PX
-  // is a conservative portrait estimate at 96 CSS px/in — Letter/A4 usable
-  // height minus our 0.5in margins — so only clearly-oversized elements are
-  // touched and under-page elements still stay whole. Skipped for decks, whose
-  // slides are sized to the page.
-  try {
-    if (!document.querySelector('deck-stage')) {
-      const PAGE_PX = 1024;
-      // Our print defaults add a body padding inset only when we also zero the
-      // @page margin; computed style can't tell us (it reports screen media),
-      // so read the injected rule directly.
-      const defaults = document.querySelector('style[data-omelette-print-defaults]');
-      const pageInset = /body\s*\{[^}]*padding/.test(defaults ? defaults.textContent || '' : '');
-      const SEL = 'section,article,figure,table,pre,blockquote,[class~="card" i],[class~="page" i],[class~="sheet" i]';
-      for (const el of document.body.querySelectorAll(SEL)) {
-        if (el instanceof HTMLElement && el.offsetHeight > PAGE_PX) {
-          el.setAttribute('data-om-oversized', '');
-          // Fake-paged docs simulate sheets with over-tall break-after:page
-          // boxes; honoring the break spills half-blank pages and ends a
-          // colored box mid-sheet. Flow them, and (only when we own the page
-          // inset) drop the redundant padding/background via the rule below.
-          const cs = getComputedStyle(el);
-          if (cs.breakAfter === 'page' || cs.pageBreakAfter === 'always') {
-            el.setAttribute('data-om-fakepage', '');
-          }
-        }
-      }
-      const ost = document.createElement('style');
-      ost.textContent = '@media print{' +
-        '[data-om-oversized]{break-inside:auto !important;page-break-inside:auto !important}' +
-        '[data-om-fakepage]{break-after:auto !important;page-break-after:auto !important}' +
-        (pageInset ? '[data-om-fakepage]{padding:0 !important;background:none !important}' : '') +
-        '}';
-      document.head.appendChild(ost);
-    }
-  } catch (e) {}
-  // macOS Preview renders Skia-PDF Luminosity soft-masks as opaque grey boxes;
-  // swap the CSS that triggers them for Preview-safe forms.
-  try {
-    for (const el of document.body.querySelectorAll('*')) {
-      const cs = getComputedStyle(el);
 
-      if (cs.boxShadow !== 'none' && cs.filter === 'none') {
-        const outs = [], kept = [];
-        for (const s of cs.boxShadow.split(/,(?![^(]*[)])/)) {
-          const t = s.trim();
-          const m = t.match(/^(rgba?[(][^)]+[)]) (-?[0-9.]+px) (-?[0-9.]+px) ([0-9.]+px) -?[0-9.]+px$/);
-          if (m && parseFloat(m[4]) > 0) outs.push('drop-shadow(' + m[2] + ' ' + m[3] + ' ' + m[4] + ' ' + m[1] + ')');
-          else kept.push(t);
-        }
-        if (outs.length) {
-          el.style.setProperty('filter', outs.join(' '), 'important');
-          el.style.setProperty('box-shadow', kept.join(', ') || 'none', 'important');
-        }
-      }
-
-      const mask = cs.maskImage && cs.maskImage !== 'none' ? cs.maskImage : cs.webkitMaskImage;
-      if (mask && mask !== 'none' && cs.filter === 'none') el.style.setProperty('filter', 'opacity(1)', 'important');
-    }
-  } catch (e) {}
-  setTimeout(() => { try { window.print(); } catch (e) {} }, 200);
+  setTimeout(() => { try { window.print(); } catch (e) {} }, 300);
 })();
 </script>
 </body>
